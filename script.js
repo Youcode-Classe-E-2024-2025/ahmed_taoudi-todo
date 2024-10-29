@@ -2,7 +2,7 @@ const mainPage = document.querySelector('main');
 const formZone = document.querySelector('#form-add');
 
 
-
+// dispalyData
 // New
 const newTaskBtn = document.querySelector('#new-task-btn');
 
@@ -17,13 +17,13 @@ const searchIcon = document.querySelector('#search-icon');
 
 // add task listener
 addTaskBtn.addEventListener('click', () => {
-    // mainPage
+   
     mainPage.classList.remove('blur');
     formZone.classList.add('hidden');
 })
 // new task listener
 newTaskBtn.addEventListener('click', () => {
-    // mainPage
+   
     mainPage.classList.add('blur');
     formZone.classList.remove('hidden');
 })
@@ -35,3 +35,4 @@ cancelAddTaskBtn.addEventListener('click', () => {
     mainPage.classList.remove('blur');
     formZone.classList.add('hidden');
 })
+
