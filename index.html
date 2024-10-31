@@ -69,7 +69,7 @@
                     <!-- todo -->
                     <div class="flex items-center justify-between px-6">
                         <h2 class="py-8  text-3xl ">TODO</h2>
-                        <span class="text-xl p-2 border-b-2  border-cyan-900 ">04</span>
+                        <span id="todo-count"  class="text-xl p-2 border-b-2  border-cyan-900 ">04</span>
                     </div>
                     
                     <div id="_todo" class="h-5/6  overflow-y-auto">
@@ -84,7 +84,7 @@
                     <!-- doing -->
                     <div class="flex items-center justify-between px-6">
                         <h2 class="py-8  text-3xl ">DOING</h2>
-                        <span class="text-xl p-2 border-b-2  border-cyan-900 ">04</span>
+                        <span id="doing-count"  class="text-xl p-2 border-b-2  border-cyan-900 ">04</span>
                     </div>
                     <div id="_doing" class="h-5/6  overflow-y-auto">
                             
@@ -98,7 +98,7 @@
                     <!-- done -->
                     <div class="flex items-center justify-between px-6">
                         <h2 class="py-8  text-3xl ">DONE</h2>
-                        <span class="text-xl p-2 border-b-2  border-cyan-900 ">04</span>
+                        <span id="done-count" class="text-xl p-2 border-b-2  border-cyan-900 ">04</span>
                     </div>
                     <div id="_done" class="h-5/6  overflow-y-auto">
                        
@@ -112,14 +112,14 @@
     <div id="task-details" class="absolute h-screen w-full top-0 right-0  z-10 hidden">
         <div class="flex items-center justify-center h-full ">
             <div id="details-div" class=" rounded-2xl border-2  shadow-sm bg-sky-200 px-4 py-10 md:w-1/3 sm:w-3/4  w-full">
-                
+                <!-- details  -->
             </div>
         </div>
     </div>
     <!-- form -->
-    <div id="form-add" class="absolute h-screen w-full top-0 right-0  z-10 hidden">
+    <div id="form-add-zone" class="absolute h-screen w-full top-0 right-0  z-10 hidden">
         <div class="flex items-center justify-center h-full ">
-            <form class=" rounded-2xl border-2  shadow-sm bg-sky-200 px-4 py-10 md:w-1/3 sm:w-3/4  w-full" action="">
+            <form id="add-form" class=" rounded-2xl border-2  shadow-sm bg-sky-200 px-4 py-10 md:w-1/3 sm:w-3/4  w-full" action="">
                 <h3 class="text-center text-3xl ont-medium text-gray-900 mb-8">add new task</h3>
                 <div>
 
@@ -127,13 +127,24 @@
                         <label for="taskName" class="block mb-2 text-sm font-medium text-gray-900 ">Task :</label>
                         <input
                             class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                            id="taskName" type="text" placeholder="home work ">
+                            id="taskName" name="taskName" type="text" placeholder="home work ">
                     </div>
                     <div>
                         <label for="deadLine" class="block mb-2 text-sm font-medium text-gray-900 ">DeadLine :</label>
                         <input
                             class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                            id="deadLine" type="date">
+                            id="deadLine" name="deadLine" type="date">
+                    </div>
+
+                    <div>
+                        <label for="taskStatus" class="block mb-2 text-sm font-medium text-gray-900 "> chose Task
+                            status </label>
+                        <select name="taskStatus" id="taskStatus" aria-placeholder="easy"
+                            class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  ">
+                            <option value="todo">Todo</option>
+                            <option value="doing">Doing</option>
+                            <option value="done">Done</option>
+                        </select>
                     </div>
 
                     <div>
@@ -141,7 +152,6 @@
                             priority </label>
                         <select name="taskLevel" id="taskLevel" aria-placeholder="easy"
                             class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  ">
-
                             <option value="high">High</option>
                             <option value="medium">Medium</option>
                             <option value="low">Low</option>

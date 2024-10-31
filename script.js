@@ -1,9 +1,19 @@
+'use strict'
 const mainPage = document.querySelector('main');
-const formZone = document.querySelector('#form-add');
+const formZone = document.querySelector('#form-add-zone');
+const addForm = document.querySelector('#add-form');
 const taskDetails = document.querySelector('#task-details');
 const detailsDiv= document.querySelector('#details-div');
 const welcome= document.querySelector('.welcome');
-// let allTasks;
+const _todo= document.getElementById('_todo');
+const _doing= document.getElementById('_doing');
+const _done= document.getElementById('_done');
+const todoCount= document.getElementById('todo-count');
+const doingCount= document.getElementById('doing-count');
+const doneCount= document.getElementById('done-count');
+let  canbanCarts;
+let allTasks;
+let idc=21;
 //  const allTasks ;
 
 // cons
@@ -20,7 +30,7 @@ async function fetchTasks() {
 
         const tasks = await response.json();
         // console.log(tasks);
-      
+      allTasks=tasks;
         displayTasks(tasks);
         
     } catch (error) {
@@ -32,22 +42,23 @@ function displayTasks(allTasks) {
     let todoTasks = allTasks.filter(item=> item.status==='todo' );
     let doingTasks = allTasks.filter(item=> item.status==='doing' );
     let doneTasks = allTasks.filter(item=> item.status==='done' );
-
-    const _todo= document.getElementById('_todo');
-    const _doing= document.getElementById('_doing');
-    const _done= document.getElementById('_done');
-    
+    todoCount.textContent = `${todoTasks.length}`
+    doingCount.textContent = `${doingTasks.length}`
+    doneCount.textContent = `${doneTasks.length}`
+ 
     _todo.innerHTML="";
     _doing.innerHTML="";
     _done.innerHTML="";
+    console.log('Todo Tasks ', todoTasks); 
+    console.log('Doing Tasks ', doingTasks); 
+    console.log('Done Tasks ', doneTasks);
 
     todoTasks.forEach( task => createTask(task,_todo))
     doingTasks.forEach( task => createTask(task,_doing))
     doneTasks.forEach( task => createTask(task,_done))
        
-
-    const canbanCarts = document.querySelectorAll('.canban-cart');
-    addEventListenerForTask(canbanCarts,allTasks)
+    canbanCarts = document.querySelectorAll('.canban-cart');
+    addEventListenerForTask(canbanCarts)
 }
 
 function createTask(task,zone){
@@ -63,8 +74,7 @@ function createTask(task,zone){
         }else{
             taskDiv.className = 'canban-cart my-4 p-4  h-fit rounded-md  hover:bg-orange-500 bg-orange-300';
 
-        }
-        
+        } 
         taskDiv.innerHTML = `
         <div class="flex justify-between">
                                 <!-- name -->
@@ -94,6 +104,7 @@ function createTask(task,zone){
            
         `;
         zone.appendChild(taskDiv);
+        // canbanCarts = document.querySelectorAll('.canban-cart');
  
 }
 function deleteTask(){
@@ -161,9 +172,34 @@ const searchIcon = document.querySelector('#search-icon');
 
 // add task listener
 addTaskBtn.addEventListener('click', () => {
-   
-    mainPage.classList.remove('blur');
-    formZone.classList.add('hidden');
+    // const newTask= {id: 22,
+    //     title: "hhhhhhhhhhhhhh",
+    //     description: "ddddddddddddddd",
+    //     status: "doing",
+    //     dueDate: "2024-11-04",
+    //     priority: "medium"};
+        // allTasks.push(newTask)
+        // console.log(allTasks);
+        const newTask={
+            id: idc++,
+            title: addForm['taskName'].value ,
+            description: addForm['desc'].value ,
+            status: addForm['taskStatus'].value ,
+            dueDate: addForm['deadLine'].value,
+            priority: addForm['taskLevel'].value 
+        }; 
+        // console.log(newTask);
+        console.log('New Task:', newTask);
+        allTasks.push(newTask);
+        // console.log('All Tasks:', allTasks); 
+        // console.log(allTasks);
+       displayTasks(allTasks);
+
+    //    createTask(newTask,_doing)
+    //    displayTasks(allTasks);
+
+    // mainPage.classList.remove('blur');
+    // formZone.classList.add('hidden');
 })
 // new task listener
 newTaskBtn.addEventListener('click', () => {
@@ -180,7 +216,7 @@ cancelAddTaskBtn.addEventListener('click', () => {
     formZone.classList.add('hidden');
 })
 
-function addEventListenerForTask(canbanCarts,allTasks){
+function addEventListenerForTask(canbanCarts){
     canbanCarts.forEach(cart =>{
     
         // console.log(cart)
@@ -215,6 +251,7 @@ function addEventListenerForTask(canbanCarts,allTasks){
         // })
     })
 }
+
 detailsDiv.addEventListener('click',(event)=>{
     event.stopPropagation()
 })
@@ -224,3 +261,26 @@ taskDetails.addEventListener('click', ( event) => {
     mainPage.classList.remove('blur');
     taskDetails.classList.add('hidden');
 })
+
+function validateFormInputs(){
+    // console.log(addForm['taskName'].value); 
+    // console.log(addForm['deadLine'].value); 
+    // console.log(addForm['desc'].value); 
+    // console.log(addForm['taskLevel'].value,"low"); 
+    // console.log(addForm['taskStatus'].value,"do"); 
+const newTask={
+            id: 22,
+            title: addForm['taskName'].value ,
+            description: addForm['desc'].value ,
+            status: addForm['taskStatus'].value ,
+            dueDate: addForm['deadLine'].value,
+            priority: addForm['taskLevel'].value 
+        }; 
+        // console.log(newTask);
+        allTasks.push(newTask)
+        console.log(allTasks);
+       displayTasks(allTasks);
+
+    //    createTask(newTask,_doing)
+    //    displayTasks(allTasks);
+};
