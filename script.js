@@ -1,7 +1,9 @@
 'use strict'
 const mainPage = document.querySelector('main');
 const formZone = document.querySelector('#form-add-zone');
+const formEditZone = document.querySelector('#form-edit-zone');
 const addForm = document.querySelector('#add-form');
+const editForm = document.querySelector('#edit-form');
 const taskDetails = document.querySelector('#task-details');
 const detailsDiv= document.querySelector('#details-div');
 const welcome= document.querySelector('.welcome');
@@ -15,10 +17,9 @@ let  canbanCarts;
 let allTasks;
 let idc=21;
 //  const allTasks ;
+ 
 
-// cons
-
-addForm.reset() 
+// addForm.reset() 
 
 
 async function fetchTasks() {
@@ -40,7 +41,7 @@ async function fetchTasks() {
 }
 
 function displayTasks(allTasks) {
-    let todoTasks = allTasks.filter(item=> item.status==='todo' );
+    let todoTasks = allTasks.filter(item => item.status==='todo' );
     let doingTasks = allTasks.filter(item=> item.status==='doing' );
     let doneTasks = allTasks.filter(item=> item.status==='done' );
     todoCount.textContent = `${todoTasks.length}`
@@ -120,8 +121,24 @@ function deleteTask(taskId){
     // allTasks =allTasks.filter(tsk=> tsk.id !== taskId);
     displayTasks(allTasks); 
 }
+// **** edit ****
 function editTask(taskId){
     // need work
+    mainPage.classList.add('blur');
+    formEditZone.classList.remove('hidden');
+    const index = allTasks.findIndex(tsk => Number(tsk.id) === Number(taskId));
+    const oldvalue= allTasks[index];
+    // const newValue =oldvalue;
+        // console.log("newvalue",newValue);
+        console.log("oldvalue",oldvalue);
+        editForm['taskName'].value =oldvalue.title ;
+        editForm['desc'].value =oldvalue.description ;
+        editForm['taskStatus'].value =oldvalue.status ;
+        editForm['deadLine'].value =oldvalue.dueDate ;
+        editForm['taskLevel'].value =oldvalue.priority ;
+return index;
+// allTasks[index]=newValue;
+
 }
 
 function displayDetails(selectedTask ){
@@ -171,25 +188,24 @@ fetchTasks();
 // New
 const newTaskBtn = document.querySelector('#new-task-btn');
 
+
 // Add
 const addTaskBtn = document.querySelector('#add-task-btn');
+// edit
+const editTaskBtn = document.querySelector('#edit-task-btn');
 
-// Cancel
+// Cancel add
 const cancelAddTaskBtn = document.querySelector('#cancel-add-task-btn');
+
+// Cancel edit
+const cancelEditTaskBtn = document.querySelector('#cancel-edit-task-btn');
 
 // search
 const searchIcon = document.querySelector('#search-icon');
 
 // add task listener
 addTaskBtn.addEventListener('click', () => {
-    // const newTask= {id: 22,
-    //     title: "hhhhhhhhhhhhhh",
-    //     description: "ddddddddddddddd",
-    //     status: "doing",
-    //     dueDate: "2024-11-04",
-    //     priority: "medium"};
-        // allTasks.push(newTask)
-        // console.log(allTasks);
+    
         const newTask={
             id: idc++,
             title: addForm['taskName'].value ,
@@ -205,17 +221,12 @@ addTaskBtn.addEventListener('click', () => {
         // console.log('All Tasks:', allTasks); 
         // console.log(allTasks);
        displayTasks(allTasks);
-       addForm.reset() 
-
-    //    createTask(newTask,_doing)
-    //    displayTasks(allTasks);
-
-    // mainPage.classList.remove('blur');
-    // formZone.classList.add('hidden');
+       addForm.reset()  
 })
+
 // new task listener
 newTaskBtn.addEventListener('click', () => {
-   
+    addForm.reset() 
     mainPage.classList.add('blur');
     formZone.classList.remove('hidden');
 })
@@ -228,19 +239,48 @@ cancelAddTaskBtn.addEventListener('click', () => {
     formZone.classList.add('hidden');
 })
 
+// cancel edit task listener
+
+cancelEditTaskBtn.addEventListener('click', () => {
+    // mainPage
+    editForm.reset();
+    mainPage.classList.remove('blur');
+    formEditZone.classList.add('hidden');
+})
+
 function addEventListenerForTask(canbanCarts){
     canbanCarts.forEach(cart =>{
-    
-        // console.log(cart)
-        // console.log("out");
+        
         cart.addEventListener('click',(event)=>{
             // console.log(event.target.closest(".canban-cart").id);
             
             // console.log(event.target, event.target.classList.contains("edit-icon") || event.target.parentElement.classList.contains("edit-icon"), event.target.parentElement);
            if(event.target.classList.contains("edit-icon") || event.target.parentElement.classList.contains("edit-icon")) {
             //  cart.classList.add('hidden');
-            alert(`inside edit for ${cart.id}`);
-             editTask(cart.id);
+            // alert(`inside edit for ${cart.id}`);
+             const indexT=editTask(cart.id);
+             editTaskBtn.addEventListener('click', () => {
+    
+                const newTask={
+                    id: cart.id,
+                    title: editForm['taskName'].value ,
+                    description: editForm['desc'].value ,
+                    status: editForm['taskStatus'].value ,
+                    dueDate: editForm['deadLine'].value,
+                    priority: editForm['taskLevel'].value 
+                }; 
+                allTasks[indexT]=newTask
+                // console.log(newTask);
+                console.log('New Task:', newTask);
+                // allTasks.push(newTask);
+                // console.log('All Tasks:', allTasks); 
+                // console.log(allTasks);
+               displayTasks(allTasks);
+               editForm.reset();
+               mainPage.classList.remove('blur');
+               formEditZone.classList.add('hidden');
+            //    editForm.reset()  
+            })
              console.log("inside edit");
 
            }else if(event.target.classList.contains("delete-icon") || event.target.parentElement.classList.contains("delete-icon")) 
