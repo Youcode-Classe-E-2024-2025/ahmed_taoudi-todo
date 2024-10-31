@@ -3,6 +3,7 @@ const formZone = document.querySelector('#form-add');
 const taskDetails = document.querySelector('#task-details');
 const detailsDiv= document.querySelector('#details-div');
 const welcome= document.querySelector('.welcome');
+// let allTasks;
 //  const allTasks ;
 
 // cons
@@ -18,7 +19,8 @@ async function fetchTasks() {
         }
 
         const tasks = await response.json();
-        console.log(tasks);
+        // console.log(tasks);
+      
         displayTasks(tasks);
         
     } catch (error) {
@@ -45,7 +47,7 @@ function displayTasks(allTasks) {
        
 
     const canbanCarts = document.querySelectorAll('.canban-cart');
-    addEventListenerForTask(canbanCarts)
+    addEventListenerForTask(canbanCarts,allTasks)
 }
 
 function createTask(task,zone){
@@ -100,11 +102,41 @@ function deleteTask(){
 function editTask(){
     // need work
 }
-{/* <h3>${task.title} <span>(${task.priority})</span></h3>
-<p>${task.description}</p>
-<p>Status: ${task.status}</p>
-<p>Due Date: ${task.dueDate}</p> */}
-// Call fetchTasks when the script loads
+
+function displayDetails(selectedTask ){
+    
+    
+    console.log(selectedTask);
+    detailsDiv.innerHTML="";
+    detailsDiv.innerHTML=`<h3 class="text-center text-3xl font-medium text-gray-900 mb-8">task details</h3>
+                <div>
+                    <div id="task-title" class="">
+                        <p class=" text-xl font-medium text-gray-700 mb-2">Title</p>
+                        <p class="p-4">${selectedTask.title}</p>
+                    </div>
+                    <div id="task-desc" class="">
+                        <p class=" text-xl font-medium text-gray-700 mb-2"> Description</p>
+                        <p class="p-4"> ${selectedTask.description}</p>
+                    </div>
+                    <div id="task-deadline" class="">
+                        <p class=" text-xl font-medium text-gray-700 mb-2">deadLine</p>
+                        <p class="p-4">${selectedTask.dueDate}</p>
+                    </div>
+                    <div id="task-status" class="">
+                        <p class=" text-xl font-medium text-gray-700 mb-2">Status</p>
+                        <p class="p-4">${selectedTask.status}</p>
+                    </div>
+                    <div id="task-priority" class="">
+                        <p class=" text-xl font-medium text-gray-700 mb-2"> Priority</p>
+                        <p class="p-4">${selectedTask.priority}</p>
+                    </div>
+                </div> `;
+    mainPage.classList.add('blur');
+    taskDetails.classList.remove('hidden');
+}
+
+
+
 
 fetchTasks();
 
@@ -148,7 +180,7 @@ cancelAddTaskBtn.addEventListener('click', () => {
     formZone.classList.add('hidden');
 })
 
-function addEventListenerForTask(canbanCarts){
+function addEventListenerForTask(canbanCarts,allTasks){
     canbanCarts.forEach(cart =>{
     
         // console.log(cart)
@@ -170,8 +202,12 @@ function addEventListenerForTask(canbanCarts){
             console.log(cart.id); 
             cart.classList.add('hidden');
            }else{
-            mainPage.classList.add('blur');
-            taskDetails.classList.remove('hidden');
+            console.log("object");
+            // console.log(allTasks[4].id,"dfdf");
+            const selectedTask = allTasks.find((tsk) => tsk.id == cart.id);
+            // console.log(selectedTask,"fdfdfdf");
+            displayDetails(selectedTask);
+            
            } 
         })
         // cart.querySelector(".edit-icon").addEventListener("click",()=>{
