@@ -18,6 +18,7 @@ let idc=21;
 
 // cons
 
+addForm.reset() 
 
 
 async function fetchTasks() {
@@ -49,9 +50,9 @@ function displayTasks(allTasks) {
     _todo.innerHTML="";
     _doing.innerHTML="";
     _done.innerHTML="";
-    console.log('Todo Tasks ', todoTasks); 
-    console.log('Doing Tasks ', doingTasks); 
-    console.log('Done Tasks ', doneTasks);
+    // console.log('Todo Tasks ', todoTasks); 
+    // console.log('Doing Tasks ', doingTasks); 
+    // console.log('Done Tasks ', doneTasks);
 
     todoTasks.forEach( task => createTask(task,_todo))
     doingTasks.forEach( task => createTask(task,_doing))
@@ -107,10 +108,19 @@ function createTask(task,zone){
         // canbanCarts = document.querySelectorAll('.canban-cart');
  
 }
-function deleteTask(){
+
+function deleteTask(taskId){
     // need work
+    console.log(taskId);
+    const index = allTasks.findIndex(tsk => Number(tsk.id) === Number(taskId));
+    console.log(index,"index");
+    if (index !== -1) {
+        allTasks.splice(index, 1);
+    }
+    // allTasks =allTasks.filter(tsk=> tsk.id !== taskId);
+    displayTasks(allTasks); 
 }
-function editTask(){
+function editTask(taskId){
     // need work
 }
 
@@ -188,12 +198,14 @@ addTaskBtn.addEventListener('click', () => {
             dueDate: addForm['deadLine'].value,
             priority: addForm['taskLevel'].value 
         }; 
+        
         // console.log(newTask);
         console.log('New Task:', newTask);
         allTasks.push(newTask);
         // console.log('All Tasks:', allTasks); 
         // console.log(allTasks);
        displayTasks(allTasks);
+       addForm.reset() 
 
     //    createTask(newTask,_doing)
     //    displayTasks(allTasks);
@@ -220,7 +232,7 @@ function addEventListenerForTask(canbanCarts){
     canbanCarts.forEach(cart =>{
     
         // console.log(cart)
-        console.log("out");
+        // console.log("out");
         cart.addEventListener('click',(event)=>{
             // console.log(event.target.closest(".canban-cart").id);
             
@@ -234,9 +246,11 @@ function addEventListenerForTask(canbanCarts){
            }else if(event.target.classList.contains("delete-icon") || event.target.parentElement.classList.contains("delete-icon")) 
            {
             deleteTask(cart.id);
-            console.log("inside delete");
-            console.log(cart.id); 
-            cart.classList.add('hidden');
+            console.log(allTasks);
+            // console.log("inside delete");
+            // console.log(cart.id); 
+            // cart.classList.add('hidden');
+            
            }else{
             console.log("object");
             // console.log(allTasks[4].id,"dfdf");
