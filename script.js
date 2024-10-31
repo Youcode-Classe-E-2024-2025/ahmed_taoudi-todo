@@ -204,6 +204,7 @@ const newTaskBtn = document.querySelector('#new-task-btn');
 const addTaskBtn = document.querySelector('#add-task-btn');
 // edit
 const editTaskBtn = document.querySelector('#edit-task-btn');
+// sort
 const sortTasksBtn = document.querySelector('#sort-tasks-btn');
 
 sortTasksBtn.addEventListener('click',()=>{
@@ -211,6 +212,21 @@ sortTasksBtn.addEventListener('click',()=>{
       return  tsk1.dueDate < tsk2.dueDate ? -1:1
     })
     displayTasks(sortedTasks);
+})
+
+// filter
+const filterTaskBtn = document.querySelector('#filter-tasks-btn');
+
+filterTaskBtn.addEventListener('click',()=>{
+    const level=document.getElementById('filterLevel').value
+    // console.log(level,"9--0");
+    if(level!=='-1'){const filteredTasks = allTasks.filter(tsk=> tsk.priority === `${level}`);
+    displayTasks(filteredTasks);
+    }else{
+        displayTasks(allTasks);
+    }
+
+    
 })
 
 // Cancel add
