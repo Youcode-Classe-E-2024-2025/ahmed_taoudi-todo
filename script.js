@@ -208,10 +208,27 @@ const editTaskBtn = document.querySelector('#edit-task-btn');
 const sortTasksBtn = document.querySelector('#sort-tasks-btn');
 
 sortTasksBtn.addEventListener('click',()=>{
-    const sortedTasks = allTasks.sort((tsk1,tsk2)=>{
-      return  tsk1.dueDate < tsk2.dueDate ? -1:1
-    })
-    displayTasks(sortedTasks);
+    const sortType=document.getElementById('sortType').value
+    if(sortType!=='-1'){
+        if (sortType==='date') {
+            const sortedTasks = allTasks.sort((tsk1,tsk2)=>{
+                return  tsk1.dueDate < tsk2.dueDate ? -1:1
+              });
+              displayTasks(sortedTasks);
+        } else if (sortType==='priority') {
+            const prtyOrder = {
+                high: 1, // red high
+                medium: 2, // orange meduim
+                low: 3 // green low
+            };
+            const sortedTasks = allTasks.sort((tsk1,tsk2)=>{
+              return prtyOrder[tsk1.priority] - prtyOrder[tsk2.priority]
+              });
+              displayTasks(sortedTasks);
+        }
+    }else{
+        displayTasks(allTasks);
+    }
 })
 
 // filter
