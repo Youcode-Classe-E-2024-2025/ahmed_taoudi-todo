@@ -256,8 +256,71 @@ const cancelEditTaskBtn = document.querySelector('#cancel-edit-task-btn');
 const searchIcon = document.querySelector('#search-icon');
 
 // add task listener
+
+// 
+function valideForm() {
+const errorElements = document.querySelectorAll('.error');
+        errorElements.forEach(error => error.innerText = '');
+
+        let isValid = true;
+
+         // Regex  A-z 0-9
+         const validCharsRegex = /^[a-zA-Z0-9\s]+$/;
+
+         // Validate Task Name
+         const taskName = document.getElementById('taskName').value.trim();
+         if (!taskName) {
+             document.getElementById('taskName').insertAdjacentHTML('afterend', '<span class="error text-red-500">Task name is required.</span>');
+             isValid = false;
+         } else if (!validCharsRegex.test(taskName)) {
+             document.getElementById('taskName').insertAdjacentHTML('afterend', '<span class="error text-red-500">Task name contains invalid characters.</span>');
+             isValid = false;
+         }
+ 
+         // Validate Deadline
+         const deadLine = document.getElementById('deadLine').value;
+         if (!deadLine) {
+             document.getElementById('deadLine').insertAdjacentHTML('afterend', '<span class="error text-red-500">Deadline is required.</span>');
+             isValid = false;
+         }
+ 
+         // Validate Task Status
+         const taskStatus = document.getElementById('taskStatus').value;
+         if (!taskStatus) {
+             document.getElementById('taskStatus').insertAdjacentHTML('afterend', '<span class="error text-red-500">Task status is required.</span>');
+             isValid = false;
+         }
+ 
+         // Validate Task Level
+         const taskLevel = document.getElementById('taskLevel').value;
+         if (!taskLevel) {
+             document.getElementById('taskLevel').insertAdjacentHTML('afterend', '<span class="error text-red-500">Task priority is required.</span>');
+             isValid = false;
+         }
+ 
+         // Validate Description
+         const desc = document.getElementById('desc').value.trim();
+         if (!desc) {
+             document.getElementById('desc').insertAdjacentHTML('afterend', '<span class="error text-red-500">Description is required.</span>');
+             isValid = false;
+         } else if (!validCharsRegex.test(desc)) {
+             document.getElementById('desc').insertAdjacentHTML('afterend', '<span class="error text-red-500">Description contains invalid characters.</span>');
+             isValid = false;
+         }
+ 
+
+        // If all fields are valid, proceed (for example, submit the form or handle data)
+        if (isValid) {
+
+           
+            return true;
+            
+        }
+    }
+// 
+
 addTaskBtn.addEventListener('click', (ev) => {
-   
+   if(valideForm()){
         const newTask={
             id: Date.now, //id simple by time 
             title: addForm['taskName'].value ,
@@ -273,7 +336,8 @@ addTaskBtn.addEventListener('click', (ev) => {
         // console.log('All Tasks:', allTasks); 
         // console.log(allTasks);
        displayTasks(allTasks);
-       addForm.reset()  
+       addForm.reset() 
+    } 
 })
 
 // new task listener
@@ -287,6 +351,8 @@ newTaskBtn.addEventListener('click', () => {
 
 cancelAddTaskBtn.addEventListener('click', () => {
     // mainPage
+    const errorElements = document.querySelectorAll('.error');
+        errorElements.forEach(error => error.innerText = '');
     mainPage.classList.remove('blur');
     formZone.classList.add('hidden');
 })
