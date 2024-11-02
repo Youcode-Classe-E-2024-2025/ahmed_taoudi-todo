@@ -8,12 +8,12 @@
 </head>
 
 <body class="h-screen bg-cyan-100 ">
-    <main class="  h-full grid grid-cols-12  grid-rows-12 gap-0 ">
+    <main class=" relative md:static  h-full grid grid-cols-12  grid-rows-12 gap-0 ">
         <!-- **************************************************************************************************** -->
          <!-- side -->
-        <div class="bg-gray-700 absolute hidden md:static  md:block  row-start-1 col-span-full col-start-1  md:row-span-full md:col-span-2">
+        <div id="side-menu" class="bg-gray-700 hidden w-1/3 md:w-auto  absolute z-20 h-full md:static  md:block  md:row-start-1  col-start-1  md:row-span-full md:col-span-2">
             <!-- side -->
-            <div class="text-cyan-100 text-center font-bold font-sans p-2 text-sm md:text-3xl">taskFLow</div>
+            <div class="text-cyan-100 text-center font-bold font-sans p-2 text-sm md:text-2xl">taskFLow</div>
             <div class="text-center">
                 <div class="p-4">
                     <button id="new-task-btn"  type="button"
@@ -62,10 +62,17 @@
         <!-- ******************************************************************************************************** -->
         <div class="bg-cyan-950 col-start-1 md:col-start-3 row-span-2 col-span-full">
             <!-- top -->
-            <div class=" p-4 text-center text-cyan-100 font-bold font-sans text-3xl">
-                <p class="welcome ">
+            
+            <div class=" flex p-4 justify-end text-cyan-100 font-bold font-sans text-3xl">
+                <p class="welcome mx-auto">
                     welcome welcome
                 </p>
+                <button class="burger-icon flex  md:hidden items-center text-blue-600 p-3">
+                    <svg class="block h-8 w-8 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <title>Mobile menu</title>
+                        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                    </svg>
+                </button>
             </div>
             <!-- <div class="p-4 text-center">
                 <input type="search" name=""  placeholder="Search" id=""> 
@@ -99,7 +106,7 @@
                 <div class="flex-1 bg-cyan-300  shadow rounded-lg p-2">
                     <!-- todo -->
                     <div class="flex items-center justify-between px-6">
-                        <h2 class="py-8  text-3xl ">TODO</h2>
+                        <h2 class="py-4  text-3xl ">TODO</h2>
                         <span id="todo-count"  class="text-xl p-2 border-b-2  border-cyan-900 ">04</span>
                     </div>
                     
@@ -137,7 +144,7 @@
                 <div class="flex-1 w-full bg-cyan-300 shadow rounded-lg p-2 ">
                     <!-- doing -->
                     <div class="flex items-center justify-between px-6">
-                        <h2 class="py-8  text-3xl ">DOING</h2>
+                        <h2 class="py-4  text-2xl ">DOING</h2>
                         <span id="doing-count"  class="text-xl p-2 border-b-2  border-cyan-900 ">04</span>
                     </div>
                     <div id="_doing" class="h-5/6  overflow-y-auto">
@@ -151,7 +158,7 @@
                 <div class="flex-1 bg-cyan-300 shadow rounded-lg p-2">
                     <!-- done -->
                     <div class="flex items-center justify-between px-6">
-                        <h2 class="py-8  text-3xl ">DONE</h2>
+                        <h2 class="py-4  text-2xl ">DONE</h2>
                         <span id="done-count" class="text-xl p-2 border-b-2  border-cyan-900 ">04</span>
                     </div>
                     <div id="_done" class="h-5/6  overflow-y-auto">

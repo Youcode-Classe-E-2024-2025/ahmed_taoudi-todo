@@ -478,3 +478,12 @@ searchInput.addEventListener('input',()=>{
     //  console.log(searchTable);
     displayTasks(searchTable);
     })
+
+
+    // burger 
+    const burgerIcon = document.querySelector(".burger-icon");
+    const sideMenu = document.querySelector("#side-menu");
+
+    burgerIcon.addEventListener('click',()=>{
+        sideMenu.classList.toggle('hidden');
+    })
