@@ -71,7 +71,7 @@
                 <input type="search" name=""  placeholder="Search" id=""> 
             </div> -->
             <div class=" mx-auto w-3/4">
-                <label for="default-search"
+                <label for="search-text"
                     class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -81,10 +81,10 @@
                                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                         </svg>
                     </div>
-                    <input type="search" id="default-search"
+                    <input type="search" id="search-text" name="search-text"
                         class="block w-full p-4 ps-10 text-md text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="home work" required />
-                    <button type="submit"
+                    <button type="button" id="search-btn"
                         class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                 </div>
 
@@ -242,22 +242,22 @@
                 <div>
 
                     <div>
-                        <label for="taskName" class="block mb-2 text-sm font-medium text-gray-900 ">Task :</label>
+                        <label for="EtaskName" class="block mb-2 text-sm font-medium text-gray-900 ">Task :</label>
                         <input
                             class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                            id="taskName" required name="taskName" type="text" placeholder="home work ">
+                            id="EtaskName" required name="EtaskName" type="text" placeholder="home work ">
                     </div>
                     <div>
-                        <label for="deadLine" class="block mb-2 text-sm font-medium text-gray-900 ">DeadLine :</label>
+                        <label for="EdeadLine" class="block mb-2 text-sm font-medium text-gray-900 ">DeadLine :</label>
                         <input
                             class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                            id="deadLine" required name="deadLine" type="date">
+                            id="EdeadLine" required name="EdeadLine" type="date">
                     </div>
 
                     <div>
-                        <label for="taskStatus" class="block mb-2 text-sm font-medium text-gray-900 "> chose Task
+                        <label for="EtaskStatus" class="block mb-2 text-sm font-medium text-gray-900 "> chose Task
                             status </label>
-                        <select name="taskStatus" required id="taskStatus" aria-placeholder="easy"
+                        <select name="EtaskStatus" required id="EtaskStatus" aria-placeholder="easy"
                             class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  ">
                             <option value="todo">Todo</option>
                             <option value="doing">Doing</option>
@@ -266,9 +266,9 @@
                     </div>
 
                     <div>
-                        <label for="taskNiveau" class="block mb-2 text-sm font-medium text-gray-900 "> chose Task
+                        <label for="EtaskNiveau" class="block mb-2 text-sm font-medium text-gray-900 "> chose Task
                             priority </label>
-                        <select name="taskLevel" required id="taskLevel" aria-placeholder="easy"
+                        <select name="EtaskLevel" required id="EtaskLevel" aria-placeholder="easy"
                             class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  ">
                             <option value="high">High</option>
                             <option value="medium">Medium</option>
@@ -278,8 +278,8 @@
 
 
                     <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 " for="desc">Description :</label>
-                        <textarea name="desc" id="desc"  placeholder="work hard!!"
+                        <label class="block mb-2 text-sm font-medium text-gray-900 " for="Edesc">Description :</label>
+                        <textarea name="Edesc" id="Edesc"  placeholder="work hard!!"
                             class="mb-4 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
 
                     </div>

@@ -14,35 +14,87 @@ const todoCount= document.getElementById('todo-count');
 const doingCount= document.getElementById('doing-count');
 const doneCount= document.getElementById('done-count');
 let  canbanCarts;
-let allTasks;
+let allTasks=[
+    {
+        id: 0,
+        title: "home work",
+        description: "math, info, pc ",
+        status: "todo",
+        dueDate: "2024-11-30",
+        priority: "low"
+    },
+    {
+        id: 1,
+        title: "Grocery * Shopping",
+        description: "Buy fruits, vegetables, and dairy products.",
+        status: "todo",
+        dueDate: "2024-10-30",
+        priority: "medium"
+    },
+    {
+        id: 2,
+        title: "Finish Project * Report",
+        description: "Complete the final report for the project due next week.",
+        status: "done",
+        dueDate: "2024-11-05",
+        priority: "high"
+    },
+    {
+        id: 3,
+        title: "Call Mom",
+        description: "Catch up with mom and check how she's doing.",
+        status: "done",
+        dueDate: "2024-10-25",
+        priority: "low"
+    },
+    {
+        id: 4,
+        title: "Workout",
+        description: "Go to the gym for a cardio session.",
+        status: "doing",
+        dueDate: "2024-10-29",
+        priority: "medium"
+    },
+    {
+        id: 5,
+        title: "Read Book",
+        description: "Read at least 30 pages of the current book.",
+        status: "done",
+        dueDate: "2024-10-27",
+        priority: "low"
+    },
+    {
+        id: 6,
+        title: "Prepare Presentation",
+        description: "Create slides for the upcoming presentation.",
+        status: "todo",
+        dueDate: "2024-11-01",
+        priority: "high"
+    },
+    {
+        id: 7,
+        title: "Clean the House",
+        description: "Do a thorough cleaning of the living room and kitchen.",
+        status: "todo",
+        dueDate: "2024-10-31",
+        priority: "low"
+    },
+    {
+        id: 8,
+        title: "Update Resume",
+        description: "Revise and update the resume with recent experience.",
+        status: "doing",
+        dueDate: "2024-11-10",
+        priority: "medium"
+    }
+];
 // let idc=21;
 //  const allTasks ;
  
 welcome.addEventListener("click",()=>{
     console.log(allTasks);
 })
-
-// addForm.reset() 
-
-
-async function fetchTasks() {
-    try {
-        const response = await fetch('./data/data.json');
-        console.log(response);
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-
-        const tasks = await response.json();
-        // console.log(tasks);
-      allTasks=tasks;
-        displayTasks(tasks);
-        
-    } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-    }
-}
-
+ 
 // **** affiche ****
 
 function displayTasks(allTasks) {
@@ -59,7 +111,7 @@ function displayTasks(allTasks) {
     // console.log('Todo Tasks ', todoTasks); 
     // console.log('Doing Tasks ', doingTasks); 
     // console.log('Done Tasks ', doneTasks);
-
+ 
     todoTasks.forEach( task => createTask(task,_todo))
     doingTasks.forEach( task => createTask(task,_doing))
     doneTasks.forEach( task => createTask(task,_done))
@@ -121,47 +173,58 @@ function createTask(task,zone){
 // **** delete ****
 
 function deleteTask(taskId){
-    // need work
-    console.log(taskId);
-    const index = allTasks.findIndex(tsk => Number(tsk.id) === Number(taskId));
-    console.log(index,"index");
-    if (index !== -1) {
-        allTasks.splice(index, 1);
-    } 
-    // allTasks =allTasks.filter(tsk=> tsk.id !== taskId);
+     
+    allTasks =allTasks.filter(tsk=> Number(tsk.id) !== Number(taskId));
     displayTasks(allTasks); 
 }
 // **** edit ****
 
-function editTask(taskId){
-    // need work
-    mainPage.classList.add('blur');
-    formEditZone.classList.remove('hidden');
-    const index = allTasks.findIndex(tsk => Number(tsk.id) === Number(taskId));
-    const oldvalue= allTasks[index];
-    // const newValue =oldvalue;
-        // console.log("newvalue",newValue);
-        console.log("oldvalue",oldvalue);
-        editForm['taskName'].value =oldvalue.title ;
-        editForm['desc'].value =oldvalue.description ;
-        editForm['taskStatus'].value =oldvalue.status ;
-        editForm['deadLine'].value =oldvalue.dueDate ;
-        editForm['taskLevel'].value =oldvalue.priority ;
-return index;
-// allTasks[index]=newValue;
-
+function editTask(taskId){ 
+        const index = allTasks.findIndex(tsk => tsk.id == taskId);
+        if (index === -1) return;  
+    
+        const taskToEdit = allTasks[index];
+        editForm['EtaskName'].value = taskToEdit.title;
+        editForm['Edesc'].value = taskToEdit.description;
+        editForm['EtaskStatus'].value = taskToEdit.status;
+        editForm['EdeadLine'].value = taskToEdit.dueDate;
+        editForm['EtaskLevel'].value = taskToEdit.priority;
+     
+        mainPage.classList.add('blur');
+        formEditZone.classList.remove('hidden');
+     
+        editTaskBtn.onclick = () => updateTask(index);
+    } 
+    function updateTask(index) {
+        const updatedTask = {
+            id: allTasks[index].id, 
+            title: editForm['EtaskName'].value,
+            description: editForm['Edesc'].value,
+            status: editForm['EtaskStatus'].value,
+            dueDate: editForm['EdeadLine'].value,
+            priority: editForm['EtaskLevel'].value,
+        };
+     
+        allTasks[index] = updatedTask;
+     
+        displayTasks(allTasks);
+     
+        mainPage.classList.remove('blur');
+        formEditZone.classList.add('hidden');
+     
+        editForm.reset(); 
 }
  
 function displayDetails(selectedTask ){
     
     
-    console.log(selectedTask);
+    console.log("inside display dtl",selectedTask);
     detailsDiv.innerHTML="";
     detailsDiv.innerHTML=`<h3 class="text-center text-3xl font-medium text-gray-900 mb-8">task details</h3>
                 <div>
                     <div id="task-title" class="">
                         <p class=" text-xl font-medium text-gray-700 mb-2">Title</p>
-                        <p class="p-4">${selectedTask.title}</p>
+                        <p class="p-4">${selectedTask.title} </p>
                     </div>
                     <div id="task-desc" class="">
                         <p class=" text-xl font-medium text-gray-700 mb-2"> Description</p>
@@ -173,7 +236,7 @@ function displayDetails(selectedTask ){
                     </div>
                     <div id="task-status" class="">
                         <p class=" text-xl font-medium text-gray-700 mb-2">Status</p>
-                        <p class="p-4">${selectedTask.status}</p>
+                        <p class="p-4">${selectedTask.status}  &copy id : ${selectedTask.id}</p>
                     </div>
                     <div id="task-priority" class="">
                         <p class=" text-xl font-medium text-gray-700 mb-2"> Priority</p>
@@ -185,17 +248,9 @@ function displayDetails(selectedTask ){
 }
 
 
+displayTasks(allTasks); 
 
-
-fetchTasks();
-
-
-// function displayData(){
-
-// }
-// function displayData(){
-
-// }
+ 
 // New
 const newTaskBtn = document.querySelector('#new-task-btn');
 
@@ -242,8 +297,7 @@ filterTaskBtn.addEventListener('click',()=>{
     }else{
         displayTasks(allTasks);
     }
-
-    
+ 
 })
 
 // Cancel add
@@ -253,7 +307,8 @@ const cancelAddTaskBtn = document.querySelector('#cancel-add-task-btn');
 const cancelEditTaskBtn = document.querySelector('#cancel-edit-task-btn');
 
 // search
-const searchIcon = document.querySelector('#search-icon');
+const searchBtn = document.querySelector('#search-btn');
+const searchInput = document.querySelector('#search-text');
 
 // add task listener
 
@@ -322,7 +377,7 @@ const errorElements = document.querySelectorAll('.error');
 addTaskBtn.addEventListener('click', (ev) => {
    if(valideForm()){
         const newTask={
-            id: Date.now, //id simple by time 
+            id: new Date().valueOf(), //id simple by time 
             title: addForm['taskName'].value ,
             description: addForm['desc'].value ,
             status: addForm['taskStatus'].value ,
@@ -333,8 +388,6 @@ addTaskBtn.addEventListener('click', (ev) => {
         // console.log(newTask);
         console.log('New Task:', newTask);
         allTasks.push(newTask);
-        // console.log('All Tasks:', allTasks); 
-        // console.log(allTasks);
        displayTasks(allTasks);
        addForm.reset() 
     } 
@@ -352,7 +405,7 @@ newTaskBtn.addEventListener('click', () => {
 cancelAddTaskBtn.addEventListener('click', () => {
     // mainPage
     const errorElements = document.querySelectorAll('.error');
-        errorElements.forEach(error => error.innerText = '');
+    errorElements.forEach(error => error.innerText = '');
     mainPage.classList.remove('blur');
     formZone.classList.add('hidden');
 })
@@ -369,58 +422,34 @@ cancelEditTaskBtn.addEventListener('click', () => {
 function addEventListenerForTask(canbanCarts){
     canbanCarts.forEach(cart =>{
         
-        cart.addEventListener('click',(event)=>{
-            // console.log(event.target.closest(".canban-cart").id);
+        cart.addEventListener('click',(event)=>{ 
             
             // console.log(event.target, event.target.classList.contains("edit-icon") || event.target.parentElement.classList.contains("edit-icon"), event.target.parentElement);
-           if(event.target.classList.contains("edit-icon") || event.target.parentElement.classList.contains("edit-icon")) {
-            //  cart.classList.add('hidden');
-            // alert(`inside edit for ${cart.id}`);
-             const indexT=editTask(cart.id);
-             editTaskBtn.addEventListener('click', () => {
-    
-                const newTask={
-                    id: cart.id,
-                    title: editForm['taskName'].value ,
-                    description: editForm['desc'].value ,
-                    status: editForm['taskStatus'].value ,
-                    dueDate: editForm['deadLine'].value,
-                    priority: editForm['taskLevel'].value 
-                }; 
-                allTasks[indexT]=newTask
-                // console.log(newTask);
-                console.log('New Task:', newTask);
-                // allTasks.push(newTask);
-                // console.log('All Tasks:', allTasks); 
-                // console.log(allTasks);
-               displayTasks(allTasks);
-            //    editForm.reset();
-               mainPage.classList.remove('blur');
-               formEditZone.classList.add('hidden');
-            //    editForm.reset()  
-            })
+        //    edit-icon
+          if(event.target.classList.contains("edit-icon") || event.target.parentElement.classList.contains("edit-icon")) {
+            
+             editTask(cart.id); 
+             
              console.log("inside edit");
 
-           }else if(event.target.classList.contains("delete-icon") || event.target.parentElement.classList.contains("delete-icon")) 
+           }
+        //    delete-icon
+           else if(event.target.classList.contains("delete-icon") || event.target.parentElement.classList.contains("delete-icon")) 
            {
             deleteTask(cart.id);
-            console.log(allTasks);
-            // console.log("inside delete");
-            // console.log(cart.id); 
-            // cart.classList.add('hidden');
+            console.log(allTasks); 
             
-           }else{
-            console.log("object");
-            // console.log(allTasks[4].id,"dfdf");
+           }
+        //    details
+           else{  
+            
             const selectedTask = allTasks.find((tsk) => tsk.id == cart.id);
             // console.log(selectedTask,"fdfdfdf");
+             console.log("inside b detials");
             displayDetails(selectedTask);
             
            } 
-        })
-        // cart.querySelector(".edit-icon").addEventListener("click",()=>{
-        //     welcome.textContent="44444444444444444444444444"
-        // })
+        }) 
     })
 }
 
@@ -432,4 +461,13 @@ taskDetails.addEventListener('click', ( event) => {
     // event.stopPropagation()
     mainPage.classList.remove('blur');
     taskDetails.classList.add('hidden');
+})
+
+
+//  search
+searchBtn.addEventListener('click',()=>{
+//    console.log('ff', searchInput.value); 
+const searchTable = allTasks.filter(t=> {t.title.contains(searchInput.value)})
+console.log(searchTable);
+
 })
