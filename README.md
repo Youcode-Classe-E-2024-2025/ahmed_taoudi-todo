@@ -10,6 +10,7 @@ TaskFlow est une application de gestion de tâches qui vous aide à organiser vo
 - **Affichage des tâches** : Visualisez toutes vos tâches classées par statut (À faire, En cours, Terminé).
 - **Filtrage et tri** : Filtrez vos tâches par priorité et triez-les par date ou par niveau de priorité.
 - **Détails des tâches** : Affichez les détails complets d'une tâche en un clic.
+- **recherche dans tâches** : recherche par titre et desc .
 
 ## Installation
 Pour installer TaskFlow, suivez ces étapes :

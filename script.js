@@ -465,9 +465,16 @@ taskDetails.addEventListener('click', ( event) => {
 
 
 //  search
-searchBtn.addEventListener('click',()=>{
-//    console.log('ff', searchInput.value); 
-const searchTable = allTasks.filter(t=> {t.title.contains(searchInput.value)})
-console.log(searchTable);
+// searchBtn.addEventListener('click',()=>{
+// //    console.log('ff', searchInput.value); 
+// const searchTable = allTasks.filter(tsk=> tsk.title.toLowerCase().includes(searchInput.value) || tsk.description.toLowerCase().includes(searchInput.value) )
+// //  console.log(searchTable);
+// displayTasks(searchTable);
+// })
 
-})
+searchInput.addEventListener('input',()=>{
+    //    console.log('ff', searchInput.value); 
+    const searchTable = allTasks.filter(tsk=> tsk.title.toLowerCase().includes(searchInput.value) || tsk.description.toLowerCase().includes(searchInput.value) )
+    //  console.log(searchTable);
+    displayTasks(searchTable);
+    })
